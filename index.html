@@ -76,7 +76,7 @@
         <h2 class="premio">Samsung Galaxy A27 5G — NUEVO ✅</h2>
         
         <div class="info">
-            <p><span class="etiqueta">🎫 Números disponibles:</span> <span id="disponibles">200</span> de 200</p>
+            <p><span class="etiqueta">🎫 Números disponibles:</span> <span id="disponibles">198</span> de 200</p>
             <p><span class="etiqueta">💰 Valor por número:</span> R$ 13,00</p>
             <p><span class="etiqueta">📅 Fecha del sorteo:</span> 12/11/2026</p>
             <p><span class="etiqueta">💳 Pago por PIX (CPF):</span> 712.675.382-95</p>
@@ -96,6 +96,9 @@
         <div class="panel-admin" id="panelAdmin">
             <h3>🔧 Panel del Dueño</h3>
             <p>Tocas un número para marcarlo como vendido ✅</p>
+            <p style="font-size: 13px; color: #666; margin: 10px 0;">
+                ⚠️ Cada vez que vendas un número nuevo, agrégalo a la lista en el código y guarda.
+            </p>
             <button class="btn-cerrar-sesion" id="btnSalir">Cerrar sesión</button>
         </div>
 
@@ -109,10 +112,11 @@
     <script>
         const CLAVE_DUENO = '30052823';
         const TU_NUMERO_WHATSAPP = '5565993417539';
-        const CHAVE_PIX = '71267538295';
         const TOTAL_NUMEROS = 200;
         
-        let OCUPADOS = JSON.parse(localStorage.getItem('numerosVendidos') || '[]');
+        // ✅ NÚMEROS VENDIDOS — Agrega aquí los que se van vendiendo
+        const OCUPADOS = [3, 14]; 
+        
         let esAdmin = false;
         let numeroSeleccionado = null;
 
@@ -143,11 +147,13 @@
                 btn.onclick = () => {
                     if (esAdmin) {
                         if (OCUPADOS.includes(i)) {
-                            OCUPADOS = OCUPADOS.filter(n => n !== i);
+                            const idx = OCUPADOS.indexOf(i);
+                            if (idx > -1) OCUPADOS.splice(idx, 1);
                         } else {
                             OCUPADOS.push(i);
+                            OCUPADOS.sort((a, b) => a - b);
                         }
-                        localStorage.setItem('numerosVendidos', JSON.stringify(OCUPADOS));
+                        alert('Lista actualizada: [' + OCUPADOS.join(', ') + ']\n\n⚠️ Copia estos números, agrégalos en el código y guarda para que todos los vean.');
                         renderizarNumeros();
                     } else {
                         if (OCUPADOS.includes(i)) return;

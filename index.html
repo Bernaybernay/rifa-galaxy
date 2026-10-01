@@ -3,95 +3,221 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RIFA — Galaxy A27 5G</title>
+    <title>Rifa Oficial - Samsung Galaxy A27 5G</title>
     <style>
-        * { margin: 0; padding: 0; font-family: sans-serif; box-sizing: border-box; }
-        body { 
-            background: linear-gradient(135deg, #1a73e8, #34a853); 
-            min-height: 100vh; 
-            padding: 20px; 
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
+        body { background: linear-gradient(135deg, #0066cc, #00cc99); min-height: 100vh; padding: 15px; }
+        .tarjeta { background: white; border-radius: 20px; padding: 25px; max-width: 500px; margin: 0 auto; box-shadow: 0 8px 32px rgba(0,0,0,0.2); }
+        h1 { text-align: center; color: #d4af37; margin-bottom: 5px; font-size: 22px; }
+        .premio { text-align: center; font-size: 18px; font-weight: bold; color: #2c3e50; margin-bottom: 20px; }
+        .info { background: #fff8dc; padding: 15px; border-radius: 12px; margin-bottom: 20px; }
+        .info p { margin: 8px 0; font-size: 16px; }
+        .etiqueta { font-weight: bold; color: #2c3e50; }
+        
+        .btn-admin { position: fixed; top: 10px; right: 10px; background: #333; color: white; border: none; padding: 8px 12px; border-radius: 8px; cursor: pointer; font-size: 14px; }
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); align-items: center; justify-content: center; z-index: 1000; }
+        .modal.mostrar { display: flex; }
+        .modal-contenido { background: white; padding: 30px; border-radius: 15px; max-width: 400px; width: 90%; }
+        .modal-contenido h3 { margin-bottom: 15px; text-align: center; }
+        .modal-contenido input { width: 100%; padding: 12px; margin-bottom: 15px; border: 2px solid #ddd; border-radius: 8px; font-size: 16px; }
+        .modal-contenido button { width: 100%; padding: 12px; border: none; border-radius: 8px; font-size: 16px; cursor: pointer; margin: 5px 0; }
+        .btn-entrar { background: #2e7d32; color: white; }
+        .btn-cerrar { background: #ccc; color: #333; }
+        .error { color: red; text-align: center; margin-top: 10px; display: none; }
+        
+        .panel-admin { display: none; margin-top: 20px; padding: 15px; background: #f0f0f0; border-radius: 12px; }
+        .panel-admin.mostrar { display: block; }
+        .panel-admin h3 { margin-bottom: 10px; }
+        .btn-guardar { background: #2e7d32; color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-size: 15px; margin-top: 10px; width: 100%; }
+        .btn-cerrar-sesion { background: #e74c3c; color: white; border: none; padding: 8px 15px; border-radius: 8px; cursor: pointer; font-size: 14px; margin-top: 10px; }
+        
+        h3 { margin: 20px 0 10px; color: #2c3e50; text-align: center; }
+        .numeros { display: grid; grid-template-columns: repeat(10, 1fr); gap: 6px; margin-bottom: 20px; }
+        .num { 
+            padding: 10px 5px; border: none; border-radius: 8px; cursor: pointer;
+            font-size: 14px; font-weight: bold; background: #e8f5e9; color: #2e7d32;
+            transition: all 0.2s;
         }
-        .card { 
-            max-width: 400px; 
-            margin: 0 auto; 
-            background: white; 
-            border-radius: 20px; 
-            padding: 30px 25px; 
-            box-shadow: 0 8px 25px rgba(0,0,0,0.2); 
+        .num:hover { background: #81c784; transform: scale(1.08); }
+        .num.ocupado { background: #e0e0e0; color: #999; cursor: not-allowed; }
+        .num.seleccionado { background: #2e7d32; color: white; box-shadow: 0 2px 8px rgba(0,0,0,0.3); }
+        .num.marcar { background: #ff9800; color: white; }
+        
+        .seleccion { text-align: center; margin: 15px 0; font-size: 18px; }
+        .btn-whatsapp {
+            display: block; width: 100%; padding: 15px; border: none; border-radius: 12px;
+            background: #25d366; color: white; font-size: 18px; font-weight: bold; cursor: pointer;
+            margin-top: 15px; transition: transform 0.2s;
         }
-        h1 { 
-            text-align: center; 
-            color: #1a73e8; 
-            font-size: 22px; 
-            margin-bottom: 15px; 
-        }
-        .premio { 
-            text-align: center; 
-            font-size: 18px; 
-            font-weight: bold; 
-            color: #333; 
-            margin-bottom: 20px; 
-        }
-        .info { 
-            background: #fef3c7; 
-            padding: 15px; 
-            border-radius: 10px; 
-            margin-bottom: 15px; 
-        }
-        .pix { 
-            background: #e8f5e9; 
-            padding: 15px; 
-            border-radius: 10px; 
-            text-align: center; 
-            margin: 20px 0; 
-        }
-        .btn { 
-            display: block; 
-            background: #25d366; 
-            color: white; 
-            text-align: center; 
-            padding: 14px; 
-            border-radius: 10px; 
-            font-size: 17px; 
-            font-weight: bold; 
-            text-decoration: none; 
-            margin: 20px 0; 
-        }
-        .aviso { 
-            font-size: 13px; 
-            color: #666; 
-            margin-top: 15px; 
-            text-align: center; 
-            line-height: 1.6; 
-        }
+        .btn-whatsapp:hover { transform: scale(1.02); }
+        .btn-whatsapp:disabled { background: #ccc; cursor: not-allowed; transform: none; }
+        .aviso { margin-top: 15px; font-size: 13px; color: #666; text-align: center; line-height: 1.5; }
     </style>
 </head>
 <body>
-    <div class="card">
+    <!-- Botón de Administración -->
+    <button class="btn-admin" id="btnAdmin">🔐 Dueño</button>
+
+    <!-- Modal de Acceso -->
+    <div class="modal" id="modalAcceso">
+        <div class="modal-contenido">
+            <h3>🔑 Acceso del Dueño</h3>
+            <input type="password" id="claveIngresada" placeholder="Escribe tu clave aquí">
+            <p class="error" id="mensajeError">Clave incorrecta ❌</p>
+            <button class="btn-entrar" id="btnEntrar">Entrar</button>
+            <button class="btn-cerrar" id="btnCerrarModal">Cerrar</button>
+        </div>
+    </div>
+
+    <div class="tarjeta">
         <h1>🎉 RIFA OFICIAL 🎉</h1>
-        <p class="premio">Samsung Galaxy A27 5G — NUEVO ✅</p>
+        <h2 class="premio">Samsung Galaxy A27 5G — NUEVO ✅</h2>
         
         <div class="info">
-            <p><strong>🎟️ Números disponibles:</strong> 100</p>
-            <p><strong>💰 Valor por número:</strong> R$ 10,00</p>
-            <p><strong>📅 Fecha del sorteo:</strong> 30/10/2026</p>
+            <p><span class="etiqueta">🎫 Números disponibles:</span> <span id="disponibles">200</span> de 200</p>
+            <p><span class="etiqueta">💰 Valor por número:</span> R$ 13,00</p>
+            <p><span class="etiqueta">📅 Fecha del sorteo:</span> 30/10/2026</p>
+            <p><span class="etiqueta">💳 Pago por PIX (CPF):</span> 712.675.382-95</p>
         </div>
-        
-        <div class="pix">
-            <p><strong>💳 Pago por PIX</strong></p>
-            <p style="font-size:14px; margin-top:8px;">Chave PIX: ***********</p>
+
+        <h3>👇 Elige tu número:</h3>
+        <div class="numeros" id="contenedor-numeros"></div>
+
+        <div class="seleccion">
+            Número elegido: <strong id="numero-elegido">Ninguno</strong>
         </div>
-        
-        <a href="https://wa.me/55SEUNUMERO?text=Hola! Quiero participar en la rifa del Galaxy A27 5G" 
-           class="btn" target="_blank">
-            💬 Reservar número por WhatsApp
-        </a>
-        
+
+        <button class="btn-whatsapp" id="btn-enviar" disabled>
+            💬 Reservar por WhatsApp
+        </button>
+
+        <!-- Panel de Administración (solo visible para ti) -->
+        <div class="panel-admin" id="panelAdmin">
+            <h3>🔧 Panel del Dueño</h3>
+            <p>Tocas un número para marcarlo como vendido ✅</p>
+            <button class="btn-guardar" id="btnGuardar">💾 Guardar cambios</button>
+            <button class="btn-cerrar-sesion" id="btnSalir">Cerrar sesión</button>
+        </div>
+
         <p class="aviso">
             ⚠️ Al participar confirmas que aceptas las reglas de la rifa.<br>
             📋 Los números se asignan después de confirmar el pago.<br>
-            🎲 Sorteo transparente con comprobante público.
+            🔒 Sorteo transparente con comprobante público.
         </p>
     </div>
+
+    <script>
+        // ==============================================
+        //          TUS DATOS CONFIGURADOS ✅
+        // ==============================================
+        const CLAVE_DUENO = '30052823';
+        const TU_NUMERO_WHATSAPP = '5565993417539';
+        const CHAVE_PIX = '71267538295';
+        const TOTAL_NUMEROS = 200;
+        
+        // Cargar números vendidos guardados
+        let OCUPADOS = JSON.parse(localStorage.getItem('numerosVendidos') || '[]');
+        let esAdmin = false;
+        let numeroSeleccionado = null;
+        // ==============================================
+
+        const contenedor = document.getElementById('contenedor-numeros');
+        const disponiblesEl = document.getElementById('disponibles');
+        const numeroElegidoEl = document.getElementById('numero-elegido');
+        const btnEnviar = document.getElementById('btn-enviar');
+        const modalAcceso = document.getElementById('modalAcceso');
+        const panelAdmin = document.getElementById('panelAdmin');
+        const mensajeError = document.getElementById('mensajeError');
+
+        function actualizarDisponibles() {
+            disponiblesEl.textContent = TOTAL_NUMEROS - OCUPADOS.length;
+        }
+
+        function renderizarNumeros() {
+            contenedor.innerHTML = '';
+            for (let i = 1; i <= TOTAL_NUMEROS; i++) {
+                const btn = document.createElement('button');
+                btn.className = 'num';
+                btn.textContent = i.toString().padStart(i < 100 ? 2 : 3, '0');
+                btn.dataset.numero = i;
+                
+                if (OCUPADOS.includes(i)) {
+                    btn.classList.add('ocupado');
+                    btn.disabled = !esAdmin;
+                }
+                
+                btn.onclick = () => {
+                    if (esAdmin) {
+                        // Dueño: marcar/desmarcar como vendido
+                        if (OCUPADOS.includes(i)) {
+                            OCUPADOS = OCUPADOS.filter(n => n !== i);
+                        } else {
+                            OCUPADOS.push(i);
+                        }
+                        localStorage.setItem('numerosVendidos', JSON.stringify(OCUPADOS));
+                        renderizarNumeros();
+                    } else {
+                        // Público: elegir número
+                        if (OCUPADOS.includes(i)) return;
+                        document.querySelectorAll('.num.seleccionado').forEach(b => b.classList.remove('seleccionado'));
+                        btn.classList.add('seleccionado');
+                        numeroSeleccionado = i;
+                        numeroElegidoEl.textContent = i.toString().padStart(i < 100 ? 2 : 3, '0');
+                        btnEnviar.disabled = false;
+                    }
+                };
+                contenedor.appendChild(btn);
+            }
+            actualizarDisponibles();
+        }
+
+        // Acceso de dueño
+        document.getElementById('btnAdmin').onclick = () => {
+            modalAcceso.classList.add('mostrar');
+            mensajeError.style.display = 'none';
+            document.getElementById('claveIngresada').value = '';
+        };
+
+        document.getElementById('btnCerrarModal').onclick = () => {
+            modalAcceso.classList.remove('mostrar');
+        };
+
+        document.getElementById('btnEntrar').onclick = () => {
+            const clave = document.getElementById('claveIngresada').value;
+            if (clave === CLAVE_DUENO) {
+                esAdmin = true;
+                modalAcceso.classList.remove('mostrar');
+                panelAdmin.classList.add('mostrar');
+                renderizarNumeros();
+            } else {
+                mensajeError.style.display = 'block';
+            }
+        };
+
+        document.getElementById('btnSalir').onclick = () => {
+            esAdmin = false;
+            panelAdmin.classList.remove('mostrar');
+            numeroSeleccionado = null;
+            numeroElegidoEl.textContent = 'Ninguno';
+            btnEnviar.disabled = true;
+            renderizarNumeros();
+        };
+
+        // Enviar por WhatsApp
+        btnEnviar.onclick = () => {
+            if (!numeroSeleccionado) return;
+            const num = numeroSeleccionado.toString().padStart(numeroSeleccionado < 100 ? 2 : 3, '0');
+            const mensaje = encodeURIComponent(
+                `¡Hola! Quiero reservar el número ${num} para la rifa del Samsung Galaxy A27 5G 📱💙\n\n` +
+                `Valor: R$ 13,00\n` +
+                `Chave PIX (CPF): 712.675.382-95\n\n` +
+                `Ya voy a realizar el pago. ¡Gracias!`
+            );
+            window.open(`https://wa.me/${TU_NUMERO_WHATSAPP}?text=${mensaje}`, '_blank');
+        };
+
+        // Iniciar
+        renderizarNumeros();
+    </script>
 </body>
 </html>

@@ -3,18 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rifa Oficial - Samsung Galaxy A27 5G</title>
+    <title>Rifa de Alejandro Bernay - Galaxy A27 5G</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
         body { background: linear-gradient(135deg, #0066cc, #00cc99); min-height: 100vh; padding: 15px; }
         .tarjeta { background: white; border-radius: 20px; padding: 25px; max-width: 500px; margin: 0 auto; box-shadow: 0 8px 32px rgba(0,0,0,0.2); }
         h1 { text-align: center; color: #d4af37; margin-bottom: 5px; font-size: 22px; }
+        .premio-img { text-align: center; margin: 15px 0; }
+        .premio-img img { max-width: 260px; width: 100%; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
         .premio { text-align: center; font-size: 18px; font-weight: bold; color: #2c3e50; margin-bottom: 20px; }
         .info { background: #fff8dc; padding: 15px; border-radius: 12px; margin-bottom: 20px; }
         .info p { margin: 8px 0; font-size: 16px; }
         .etiqueta { font-weight: bold; color: #2c3e50; }
         
-        .btn-admin { position: fixed; top: 10px; right: 10px; background: #333; color: white; border: none; padding: 8px 12px; border-radius: 8px; cursor: pointer; font-size: 14px; }
+        .btn-admin { position: fixed; top: 10px; right: 10px; background: #333; color: white; border: none; padding: 8px 12px; border-radius: 8px; cursor: pointer; font-size: 14px; z-index: 100; }
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); align-items: center; justify-content: center; z-index: 1000; }
         .modal.mostrar { display: flex; }
         .modal-contenido { background: white; padding: 30px; border-radius: 15px; max-width: 400px; width: 90%; }
@@ -27,9 +29,7 @@
         
         .panel-admin { display: none; margin-top: 20px; padding: 15px; background: #f0f0f0; border-radius: 12px; }
         .panel-admin.mostrar { display: block; }
-        .panel-admin h3 { margin-bottom: 10px; }
-        .btn-guardar { background: #2e7d32; color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-size: 15px; margin-top: 10px; width: 100%; }
-        .btn-cerrar-sesion { background: #e74c3c; color: white; border: none; padding: 8px 15px; border-radius: 8px; cursor: pointer; font-size: 14px; margin-top: 10px; }
+        .btn-cerrar-sesion { background: #e74c3c; color: white; border: none; padding: 8px 15px; border-radius: 8px; cursor: pointer; font-size: 14px; margin-top: 10px; width: 100%; }
         
         h3 { margin: 20px 0 10px; color: #2c3e50; text-align: center; }
         .numeros { display: grid; grid-template-columns: repeat(10, 1fr); gap: 6px; margin-bottom: 20px; }
@@ -41,7 +41,6 @@
         .num:hover { background: #81c784; transform: scale(1.08); }
         .num.ocupado { background: #e0e0e0; color: #999; cursor: not-allowed; }
         .num.seleccionado { background: #2e7d32; color: white; box-shadow: 0 2px 8px rgba(0,0,0,0.3); }
-        .num.marcar { background: #ff9800; color: white; }
         
         .seleccion { text-align: center; margin: 15px 0; font-size: 18px; }
         .btn-whatsapp {
@@ -55,10 +54,8 @@
     </style>
 </head>
 <body>
-    <!-- Botón de Administración -->
     <button class="btn-admin" id="btnAdmin">🔐 Dueño</button>
 
-    <!-- Modal de Acceso -->
     <div class="modal" id="modalAcceso">
         <div class="modal-contenido">
             <h3>🔑 Acceso del Dueño</h3>
@@ -70,13 +67,18 @@
     </div>
 
     <div class="tarjeta">
-        <h1>🎉 RIFA OFICIAL 🎉</h1>
+        <h1>🎉 RIFA DE ALEJANDRO BERNAY 🎉</h1>
+
+        <div class="premio-img">
+            <img src="galaxy-a27.jpg" alt="Samsung Galaxy A27 5G">
+        </div>
+
         <h2 class="premio">Samsung Galaxy A27 5G — NUEVO ✅</h2>
         
         <div class="info">
             <p><span class="etiqueta">🎫 Números disponibles:</span> <span id="disponibles">200</span> de 200</p>
             <p><span class="etiqueta">💰 Valor por número:</span> R$ 13,00</p>
-            <p><span class="etiqueta">📅 Fecha del sorteo:</span> 30/10/2026</p>
+            <p><span class="etiqueta">📅 Fecha del sorteo:</span> 12/11/2026</p>
             <p><span class="etiqueta">💳 Pago por PIX (CPF):</span> 712.675.382-95</p>
         </div>
 
@@ -91,11 +93,9 @@
             💬 Reservar por WhatsApp
         </button>
 
-        <!-- Panel de Administración (solo visible para ti) -->
         <div class="panel-admin" id="panelAdmin">
             <h3>🔧 Panel del Dueño</h3>
             <p>Tocas un número para marcarlo como vendido ✅</p>
-            <button class="btn-guardar" id="btnGuardar">💾 Guardar cambios</button>
             <button class="btn-cerrar-sesion" id="btnSalir">Cerrar sesión</button>
         </div>
 
@@ -107,19 +107,14 @@
     </div>
 
     <script>
-        // ==============================================
-        //          TUS DATOS CONFIGURADOS ✅
-        // ==============================================
         const CLAVE_DUENO = '30052823';
         const TU_NUMERO_WHATSAPP = '5565993417539';
         const CHAVE_PIX = '71267538295';
         const TOTAL_NUMEROS = 200;
         
-        // Cargar números vendidos guardados
         let OCUPADOS = JSON.parse(localStorage.getItem('numerosVendidos') || '[]');
         let esAdmin = false;
         let numeroSeleccionado = null;
-        // ==============================================
 
         const contenedor = document.getElementById('contenedor-numeros');
         const disponiblesEl = document.getElementById('disponibles');
@@ -138,8 +133,7 @@
             for (let i = 1; i <= TOTAL_NUMEROS; i++) {
                 const btn = document.createElement('button');
                 btn.className = 'num';
-                btn.textContent = i.toString().padStart(i < 100 ? 2 : 3, '0');
-                btn.dataset.numero = i;
+                btn.textContent = i < 10 ? '0' + i : i;
                 
                 if (OCUPADOS.includes(i)) {
                     btn.classList.add('ocupado');
@@ -148,7 +142,6 @@
                 
                 btn.onclick = () => {
                     if (esAdmin) {
-                        // Dueño: marcar/desmarcar como vendido
                         if (OCUPADOS.includes(i)) {
                             OCUPADOS = OCUPADOS.filter(n => n !== i);
                         } else {
@@ -157,12 +150,11 @@
                         localStorage.setItem('numerosVendidos', JSON.stringify(OCUPADOS));
                         renderizarNumeros();
                     } else {
-                        // Público: elegir número
                         if (OCUPADOS.includes(i)) return;
                         document.querySelectorAll('.num.seleccionado').forEach(b => b.classList.remove('seleccionado'));
                         btn.classList.add('seleccionado');
                         numeroSeleccionado = i;
-                        numeroElegidoEl.textContent = i.toString().padStart(i < 100 ? 2 : 3, '0');
+                        numeroElegidoEl.textContent = i < 10 ? '0' + i : i;
                         btnEnviar.disabled = false;
                     }
                 };
@@ -171,7 +163,6 @@
             actualizarDisponibles();
         }
 
-        // Acceso de dueño
         document.getElementById('btnAdmin').onclick = () => {
             modalAcceso.classList.add('mostrar');
             mensajeError.style.display = 'none';
@@ -183,8 +174,7 @@
         };
 
         document.getElementById('btnEntrar').onclick = () => {
-            const clave = document.getElementById('claveIngresada').value;
-            if (clave === CLAVE_DUENO) {
+            if (document.getElementById('claveIngresada').value === CLAVE_DUENO) {
                 esAdmin = true;
                 modalAcceso.classList.remove('mostrar');
                 panelAdmin.classList.add('mostrar');
@@ -203,12 +193,11 @@
             renderizarNumeros();
         };
 
-        // Enviar por WhatsApp
         btnEnviar.onclick = () => {
             if (!numeroSeleccionado) return;
-            const num = numeroSeleccionado.toString().padStart(numeroSeleccionado < 100 ? 2 : 3, '0');
+            const num = numeroSeleccionado < 10 ? '0' + numeroSeleccionado : numeroSeleccionado;
             const mensaje = encodeURIComponent(
-                `¡Hola! Quiero reservar el número ${num} para la rifa del Samsung Galaxy A27 5G 📱💙\n\n` +
+                `¡Hola! Quiero reservar el número ${num} para la Rifa de Alejandro Bernay — Samsung Galaxy A27 5G 📱💙\n\n` +
                 `Valor: R$ 13,00\n` +
                 `Chave PIX (CPF): 712.675.382-95\n\n` +
                 `Ya voy a realizar el pago. ¡Gracias!`
@@ -216,7 +205,6 @@
             window.open(`https://wa.me/${TU_NUMERO_WHATSAPP}?text=${mensaje}`, '_blank');
         };
 
-        // Iniciar
         renderizarNumeros();
     </script>
 </body>

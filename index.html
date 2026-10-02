@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rifa de Alejandro Bernay - Galaxy A27 5G</title>
+    <title>Rifa de AB - Galaxy A27 5G</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
         body { background: linear-gradient(135deg, #0066cc, #00cc99); min-height: 100vh; padding: 15px; }
@@ -51,6 +51,7 @@
         .btn-whatsapp:hover { transform: scale(1.02); }
         .btn-whatsapp:disabled { background: #ccc; cursor: not-allowed; transform: none; }
         .aviso { margin-top: 15px; font-size: 13px; color: #666; text-align: center; line-height: 1.5; }
+        .reglas { background: #eef5ff; padding: 15px; border-radius: 12px; margin-top: 15px; font-size: 14px; line-height: 1.6; }
     </style>
 </head>
 <body>
@@ -67,7 +68,7 @@
     </div>
 
     <div class="tarjeta">
-        <h1>🎉 RIFA DE ALEJANDRO BERNAY 🎉</h1>
+        <h1>🎉 RIFA DE AB 🎉</h1>
 
         <div class="premio-img">
             <img src="galaxy-a27.jpg" alt="Samsung Galaxy A27 5G">
@@ -80,6 +81,14 @@
             <p><span class="etiqueta">💰 Valor por número:</span> R$ 13,00</p>
             <p><span class="etiqueta">📅 Fecha del sorteo:</span> 12/11/2026</p>
             <p><span class="etiqueta">💳 Pago por PIX (CPF):</span> 712.675.382-95</p>
+        </div>
+
+        <div class="reglas">
+            <strong>📋 Forma de Sorteo:</strong><br>
+            Basado en el resultado de la Quina — Caixa Econômica Federal del día 12/11/2026.<br>
+            Se suman los 5 números sorteados. La suma se divide entre 200. El RESTO es el número ganador.<br>
+            Si el resto es 0 → gana el número 200.<br>
+            <small>*No vinculado a la Caixa Econômica Federal.</small>
         </div>
 
         <h3>👇 Elige tu número:</h3>
@@ -97,7 +106,7 @@
             <h3>🔧 Panel del Dueño</h3>
             <p>Tocas un número para marcarlo como vendido ✅</p>
             <p style="font-size: 13px; color: #666; margin: 10px 0;">
-                ⚠️ Cada vez que vendas un número nuevo, agrégalo a la lista en el código y guarda.
+                ⚠️ Cuando vendas un número nuevo → agrégalo a la lista en el código y guarda para que todos lo vean.
             </p>
             <button class="btn-cerrar-sesion" id="btnSalir">Cerrar sesión</button>
         </div>
@@ -114,8 +123,11 @@
         const TU_NUMERO_WHATSAPP = '5565993417539';
         const TOTAL_NUMEROS = 200;
         
-        // ✅ NÚMEROS VENDIDOS — Agrega aquí los que se van vendiendo
+        // ==================================================
+        // ✅ NÚMEROS VENDIDOS — Agrega aquí los nuevos
+        // ==================================================
         const OCUPADOS = [3, 14]; 
+        // ==================================================
         
         let esAdmin = false;
         let numeroSeleccionado = null;
@@ -153,7 +165,7 @@
                             OCUPADOS.push(i);
                             OCUPADOS.sort((a, b) => a - b);
                         }
-                        alert('Lista actualizada: [' + OCUPADOS.join(', ') + ']\n\n⚠️ Copia estos números, agrégalos en el código y guarda para que todos los vean.');
+                        alert('Lista actualizada:\n[' + OCUPADOS.join(', ') + ']\n\n⚠️ Copia estos números, agrégalos en el código y guarda.');
                         renderizarNumeros();
                     } else {
                         if (OCUPADOS.includes(i)) return;
@@ -203,7 +215,7 @@
             if (!numeroSeleccionado) return;
             const num = numeroSeleccionado < 10 ? '0' + numeroSeleccionado : numeroSeleccionado;
             const mensaje = encodeURIComponent(
-                `¡Hola! Quiero reservar el número ${num} para la Rifa de Alejandro Bernay — Samsung Galaxy A27 5G 📱💙\n\n` +
+                `¡Hola! Quiero reservar el número ${num} para la Rifa de AB — Samsung Galaxy A27 5G 📱💙\n\n` +
                 `Valor: R$ 13,00\n` +
                 `Chave PIX (CPF): 712.675.382-95\n\n` +
                 `Ya voy a realizar el pago. ¡Gracias!`
@@ -215,3 +227,4 @@
     </script>
 </body>
 </html>
+
